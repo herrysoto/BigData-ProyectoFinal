@@ -1,0 +1,9 @@
+{
+	"name": "hsoto-datafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "315f4ae8-178a-49a8-a015-5eb1ee390e68",
+		"tenantId": "c12d68b5-d008-4fbd-b312-db11cef7e1d0"
+	}
+}
