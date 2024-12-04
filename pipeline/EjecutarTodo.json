@@ -1,0 +1,74 @@
+{
+	"name": "EjecutarTodo",
+	"properties": {
+		"description": "Este pipeline realiza la ejecución total de todos los pipelines",
+		"activities": [
+			{
+				"name": "EjecutarInput",
+				"description": "Ejecución del pipeline de input a capa bronce",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "copy_input_bronce",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EjecutarCapaBronceACapaPlata",
+				"description": "Se ejecutará el pileline capabronce_capaplata",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EjecutarInput",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "capabronce_capaplata",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EjecutarCapaPlataACapaOro",
+				"description": "Se ejecutará el pileline capaplata_capaoro",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EjecutarCapaBronceACapaPlata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "capaplata_capaoro",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
